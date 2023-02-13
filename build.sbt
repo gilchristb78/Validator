@@ -16,6 +16,7 @@ lazy val commonSettings = Seq(
       Resolver.sbtPluginRepo("releases")
   ),
 
+
   scalacOptions ++= Seq(
     "-unchecked",
     "-deprecation",
