@@ -1,0 +1,25 @@
+services:
+  - xvfb
+before_script:
+  - export DISPLAY=:99.0
+env:
+  global:
+    - GENERATE="runMain org.combinators.solitaire"
+matrix:
+  include:
+    - language: scala
+      jdk: openjdk8
+      script:
+        - sbt compile
+        - for dir in generated/src/main/java/org/combinators/solitaire/*; do
+          mv $dir src/test/java/org/combinators/solitaire
+          if sbt test; then
+          mv src/test/java/org/combinators/solitaire/* Valid
+          else
+          mv src/test/java/org/combinators/solitaire/* Invalid
+          fi;
+          done;
+        - cd Valid
+        - ls
+        - cd ../Invalid
+        - ls
