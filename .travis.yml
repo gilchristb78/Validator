@@ -12,11 +12,11 @@ matrix:
       script:
         - sbt compile
         - for dir in generated/src/main/java/org/combinators/solitaire/*; do
-          mv $dir src/test/java/org/combinators/solitaire
+          mv $dir src/test/java/org/combinators/solitaire;
           if sbt test; then
-          mv src/test/java/org/combinators/solitaire/* Valid
+          mv src/test/java/org/combinators/solitaire/* Valid;
           else
-          mv src/test/java/org/combinators/solitaire/* Invalid
+          mv src/test/java/org/combinators/solitaire/* Invalid;
           fi;
           done;
         - cd Valid
