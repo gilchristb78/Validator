@@ -1,57 +1,21 @@
-import play.sbt.PlayLayoutPlugin
-import play.twirl.sbt.SbtTwirl
-import sbt.Keys.libraryDependencies
+name := "Validator"
 
-lazy val commonSettings = Seq(
-  version := "1.0.0-SNAPSHOT",
-  organization := "org.combinators",
+version := "1.0"
 
-  javacOptions ++= Seq("-source", "8"),
+scalaVersion := "2.12.14"
 
-  scalaVersion := "2.12.4",
+libraryDependencies += "junit" % "junit" % "4.13.2" % Test
 
-  resolvers ++= Seq(
-    Resolver.sonatypeRepo("releases"),
-    Resolver.typesafeRepo("releases"),
-      Resolver.sbtPluginRepo("releases")
-  ),
+testOptions += Tests.Argument(TestFrameworks.JUnit, "-v")
 
+ThisBuild / testOptions += Tests.Argument(TestFrameworks.JUnit, "-q")
 
-  scalacOptions ++= Seq(
-    "-unchecked",
-    "-deprecation",
-    "-feature",
-    "-language:implicitConversions"
-  ),
+testOptions += Tests.Argument(TestFrameworks.JUnit, "-a", "-s")
 
-  libraryDependencies ++= Seq(
-    "org.combinators" %% "cls-scala" % "2.0.0-RC1",
-    "org.combinators" %% "templating" % "1.0.0-RC1+4-ca285511",
-    "org.combinators" %% "cls-scala-presentation-play-git" % "1.0.0-RC1+8-63d5cf0b",
-    "org.scalactic" %% "scalactic" % "3.0.1" % "test",
-    "org.scalatest" %% "scalatest" % "3.0.1" % "test",
-    // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
-    "javax.xml.bind" % "jaxb-api" % "2.3.1",
-    "ch.qos.logback" % "logback-classic" % "1.2.6",
-    "com.typesafe.scala-logging" %% "scala-logging" % "3.9.4",
-    "junit" % "junit" % "4.8.1" % "test",
-    guice
-  )
-)
+testOptions += Tests.Argument(TestFrameworks.JUnit, "-n")
 
-lazy val root = (Project(id = "nextgen-solitaire", base = file(".")))
-  .settings(commonSettings: _*)
-  .enablePlugins(SbtTwirl)
-  .enablePlugins(PlayScala)
-  .disablePlugins(PlayLayoutPlugin)
-  .settings(
-    moduleName := "nextgen-solitaire",
+testOptions += Tests.Argument(TestFrameworks.JUnit, "-f", "junitxml", "-u", "test-reports")
 
-    sourceDirectories in(Compile, TwirlKeys.compileTemplates) := Seq(
-      sourceDirectory.value / "main" / "java-templates",
-      sourceDirectory.value / "main" / "python-templates",
-      baseDirectory.value / "generated" / "src" / "main" / "java"
-    ),
+ThisBuild / testOptions += Tests.Argument(TestFrameworks.JUnit, "-P", "javax.xml.parsers.DocumentBuilderFactory", "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl")
 
-    unmanagedJars in Compile += file("demo/standAlone.jar")
-  )
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.15.0")
