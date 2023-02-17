@@ -1,0 +1,1 @@
+Solitaire variations that have compilation errors or fail one or more tests will appear here

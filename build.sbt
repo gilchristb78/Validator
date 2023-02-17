@@ -19,3 +19,5 @@ testOptions += Tests.Argument(TestFrameworks.JUnit, "-f", "junitxml", "-u", "tes
 ThisBuild / testOptions += Tests.Argument(TestFrameworks.JUnit, "-P", "javax.xml.parsers.DocumentBuilderFactory", "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl")
 
 addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.15.0")
+
+unmanagedJars in Compile += file("demo/standalone.jar")
