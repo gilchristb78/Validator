@@ -54,6 +54,7 @@ public class GiantTestCases {
 
     @Test
     public void testMoveColumn1() {
+        System.out.println("TESTMOVECOLUMN1");
         // Testing TableauToEmptyTableau$
         String type = "MultipleCards$";
         // this is where test set-up must go.
